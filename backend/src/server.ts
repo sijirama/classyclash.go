@@ -1,2 +1,12 @@
+import Express from "express"
+import { env } from "./config/env"
 
-console.log("Hello world")
+const app = Express()
+
+
+
+app.listen(env.PORT , () => {
+    console.log("Server is listening at PORT: " , env.PORT ,"...")
+})
+
+
