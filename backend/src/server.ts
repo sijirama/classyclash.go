@@ -5,6 +5,7 @@ import cors from "cors"
 import { corsOption } from "./config/corsOption"
 import databaseConnect from "./config/databaseConnect"
 import mongoose from "mongoose"
+import { AuthRouter } from "./routes/user.route"
 
 //NOTE: init
 const app = Express()
@@ -19,7 +20,8 @@ app.use(Express.urlencoded({extended:false}))
 //NOTE: healthCheck
 app.get("/PING" , (_req,res) => {res.send("PONG")})
 
-
+//NOTE: routes
+app.use("/api/user/" , AuthRouter)
 
 
 
