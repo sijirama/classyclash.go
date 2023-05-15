@@ -5,6 +5,7 @@ import asyncHandler from "express-async-handler"
 import bcrypt from "bcrypt"
 import { extend } from "joi"
 import mongoose from "mongoose"
+import { NoteModel } from "../models/Note"
 
 //NOTE: @route GET /users
 //WARN: access private
@@ -74,5 +75,21 @@ export const updateUser = async(req:Request , res:Response) => {
 
 //NOTE: @route DELETE /users
 //WARN: access private
-export const deleteUser = asyncHandler(async(req:Request , res:Response) => {})
+export const deleteUser = async(req:Request , res:Response) => {
+    const {id} = req.body
+    if(!id){
+        return res.status(400).json({message:"User not found!"})
+    }
+    const notes = await NoteModel.find({user:id}).lean().exec()
+    if(notes?.length){
+        return res.status(400).json({message:"User has assigned notes"})
+    }
+    const user = await UserModel.findById(id).exec()
+    if(!user){
+        return res.status(400).json({message:"User not found!"})
+    }
+    const result = await (user as any).deleteOne()
+    const reply = `Username ${result.username} with ID ${result._id} deleted `
+    res.status(200).json({message:reply})
+}
 
