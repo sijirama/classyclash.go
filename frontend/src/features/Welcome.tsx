@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 function Welcome() {
     
     //const date = new Date()
-    const today = "Wednesday 13:45 Am"
+  const today = "Wednesday 13:45 Am"
 
 
   return (

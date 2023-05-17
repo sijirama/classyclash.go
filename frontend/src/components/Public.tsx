@@ -4,8 +4,8 @@ import React from 'react'
 function Public() {
   return (
     <div>
-        <p>Welocme to the mern playground.</p>
-        <p>i practice ui development and carry out some frontend backend interaction experiments.</p>
+        <h3>Welcome to the Mern playground.</h3>
+        <h5>I practice UI component development and carry out some frontend backend interaction experiments.</h5>
     </div>
   )
 }
