@@ -1,5 +1,6 @@
 import {Request , Response } from "express"
 import { UserModel , UserType } from "../models/user.models"
+import bcrypt from "bcrypt"
 
 //export async function name (request:Request , response:Response){}
 //response.status.json({message: , })
@@ -20,7 +21,26 @@ export async function authenticateUser (request:Request , response:Response){
 //@access Public
 export async function registerUser (request:Request , response:Response){
     const {name , email , password} = request.body
-    response.status(200).send({message:"Hit Register"})
+    const userExists = await UserModel.findOne({email: email})
+    if(userExists){
+        response.status(401)
+        throw new Error(`User already exists`)
+    }
+    const user = await UserModel.create({
+        name: name,
+        email:email,
+        password:password
+    })
+    if(user){
+        response.status(201).json({message:"Succedfully registered" , user:{
+            _id: user._id,
+            name: user.name,
+            email:user.email
+        }})
+    }else{
+        response.status(401).json({message:"Unsuccessfull"})
+    }
+    //response.status(200).send({message:"Hit Register"})
 }
 
 //@desc logout a user
