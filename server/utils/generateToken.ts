@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken"
 import { env } from "../config/environment"
 import {Response} from "express"
+import mongoose from "mongoose"
 
-export default function generteToken(response : Response , userId : string ){
+export default function generateToken(response : Response , userId : mongoose.Types.ObjectId ){
     const token = jwt.sign({userId} , env.JWT_SECRET! , {expiresIn:"30d"})
+    console.log(token)
     response.cookie("jwt" , token , {
         httpOnly: true,
         secure: env.JWT_SECRET !== "development" ,

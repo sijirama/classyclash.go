@@ -1,6 +1,7 @@
 import Express from "express"
 import UserRouter from "./routes/user.routes"
 import * as ErrorMiddleware from "./middleware/errorHandler"
+import cookieParser from "cookie-parser"
 
 
 import { env } from "./config/environment"
@@ -14,6 +15,7 @@ connectToMongo()
 //NOTE: middleware
 app.use(Express.json())
 app.use(Express.urlencoded({extended:false}))
+app.use(cookieParser())
 
 //NOTE: routes
 app.get("/PING" , (_req, res) => res.send("PONG"))

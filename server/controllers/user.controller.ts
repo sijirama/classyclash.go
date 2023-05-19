@@ -1,6 +1,7 @@
 import {Request , Response } from "express"
 import { UserModel , UserType } from "../models/user.models"
 import bcrypt from "bcrypt"
+import generateToken from "../utils/generateToken"
 
 //export async function name (request:Request , response:Response){}
 //response.status.json({message: , })
@@ -32,6 +33,7 @@ export async function registerUser (request:Request , response:Response){
         password:password
     })
     if(user){
+        generateToken(response , user._id)
         response.status(201).json({message:"Succedfully registered" , user:{
             _id: user._id,
             name: user.name,
