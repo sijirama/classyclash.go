@@ -27,7 +27,7 @@ app.use(ErrorMiddleware.errorHandler)
 //NOTE: SERVER
 mongoose.connection.once("open", () =>{
     app.listen(env.PORT, ()=>{
-        console.clear()
+        //console.clear()
         console.log("Server is running on port:",env.PORT)
     })
 })
