@@ -4,9 +4,12 @@ import * as ErrorMiddleware from "./middleware/errorHandler"
 
 
 import { env } from "./config/environment"
+import { connectToMongo } from "./config/mongo"
+import mongoose from "mongoose"
 
 
 const app = Express()
+connectToMongo()
 
 //NOTE: middleware
 app.use(Express.json())
@@ -22,7 +25,9 @@ app.use(ErrorMiddleware.errorHandler)
 
 
 //NOTE: SERVER
-app.listen(env.PORT, ()=>{
-    console.clear()
-    console.log("Server is running on port:",env.PORT)
+mongoose.connection.once("open", () =>{
+    app.listen(env.PORT, ()=>{
+        console.clear()
+        console.log("Server is running on port:",env.PORT)
+    })
 })

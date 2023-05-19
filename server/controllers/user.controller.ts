@@ -1,5 +1,5 @@
-import { throws } from "assert"
 import {Request , Response } from "express"
+import { UserModel , UserType } from "../models/user.models"
 
 //export async function name (request:Request , response:Response){}
 //response.status.json({message: , })
