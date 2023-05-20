@@ -8,7 +8,6 @@ import { env } from "./config/environment"
 import { connectToMongo } from "./config/mongo"
 import mongoose from "mongoose"
 
-
 const app = Express()
 connectToMongo()
 
