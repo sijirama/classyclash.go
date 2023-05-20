@@ -85,10 +85,23 @@ export async function getUser (request:any, response:Response){
 //@desc get user profile
 //route PUT /api/users/profile
 //@access Private
-export async function updateUser (request:Request , response:Response){
-    response.status(200).send({message:"Hit updateuser"})
+export async function updateUser (request:any , response:Response){
+    //@ts-ignore
+    const user = await UserModel.findById(request.user._id);
+    if(user){
+        user.name = request.body.name || user.name
+        user.email = request.body.email || user.email
+        if(request.body.password){
+            user.password = request.body.passwordpassword
+        }
+        const updatedUser = await user.save()
+        response.status(200).json({updatedUser:{
+            _id:updatedUser._id,
+            name:updatedUser.name,
+            email:updatedUser.email
+        }})
+    }else{
+        response.status(404)
+        throw new Error("User not found")
+    }
 }
-
-
-
-
