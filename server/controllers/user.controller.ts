@@ -72,6 +72,7 @@ export async function logoutUser (_request:Request , response:Response){
 //route POST /api/users/profile
 //@access Private
 export async function getUser (request:Request , response:Response){
+    console.log((request as any).user)
     const {} = request.body
     const users:UserType[] = await UserModel.find()
     console.log(users)

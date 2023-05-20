@@ -7,7 +7,8 @@ export const protect  =  asyncHandler( async (req, res , next) => {
     let token
     let decoded:any
 
-    token = req.cookies.jwt
+    token = req.cookies
+    console.log("Helooooooooooooo" , token)
     
     if(token){
         try {

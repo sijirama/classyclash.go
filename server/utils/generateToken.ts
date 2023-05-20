@@ -5,7 +5,6 @@ import mongoose from "mongoose"
 
 export default function generateToken(response : Response , userId : mongoose.Types.ObjectId ){
     const token = jwt.sign({userId} , env.JWT_SECRET! , {expiresIn:"30d"})
-    console.log(token)
     response.cookie("jwt" , token , {
         httpOnly: true,
         secure: env.JWT_SECRET !== "development" ,
