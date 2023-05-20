@@ -60,14 +60,19 @@ export async function registerUser (request:Request , response:Response){
 //@desc logout a user
 //route POST /api/users/logout 
 //@access Public
-export async function logoutUser (request:Request , response:Response){
-    response.status(200).send({message:"Hit logoutUser"})
+export async function logoutUser (_request:Request , response:Response){
+    response.cookie("jwt" , "" , {
+        httpOnly: true,
+        expires: new Date(0),
+    })
+    response.status(200).send({message:"User logged out"})
 }
 
 //@desc get user profile
 //route POST /api/users/profile
 //@access Private
 export async function getUser (request:Request , response:Response){
+    const {} = request.body
     const users:UserType[] = await UserModel.find()
     console.log(users)
     response.status(200).send({message:"Hit getuser"})
