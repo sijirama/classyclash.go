@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node server/server.ts",
-    "dev": "nodemon --exec ts-node server/server",
+    "server": "nodemon --exec ts-node server/server",
+    "client":"npm run dev --prefix client",
     "build": "tsc"
   },
   "keywords": [],
