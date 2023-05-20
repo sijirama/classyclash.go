@@ -14,7 +14,20 @@ import generateToken from "../utils/generateToken"
 //route POST /api/users/auth 
 //@access Public
 export async function authenticateUser (request:Request , response:Response){
-    response.status(200).send({message:"Hit Authentication"})
+    const {email, password} = request.body
+    const user = await UserModel.findOne({ email: email})
+
+
+    if(user && (await (user as any).matchPassword(password) )){
+        generateToken(response , user._id)
+        response.status(201).json({message:"Succedfully authenticated!" , user:{
+            _id: user._id,
+            name: user.name,
+            email:user.email
+        }})
+    }else{
+        response.status(401).json({message:"Invalid user or email"})
+    }
 }
 
 //@desc Register a new user
@@ -42,7 +55,6 @@ export async function registerUser (request:Request , response:Response){
     }else{
         response.status(401).json({message:"Unsuccessfull"})
     }
-    //response.status(200).send({message:"Hit Register"})
 }
 
 //@desc logout a user
