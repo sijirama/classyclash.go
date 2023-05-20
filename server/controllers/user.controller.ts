@@ -72,13 +72,14 @@ export async function logoutUser (_request:Request , response:Response){
 //@desc get user profile
 //route POST /api/users/profile
 //@access Private
-export async function getUser (request:Request , response:Response){
+export async function getUser (request:any, response:Response){
     //@ts-ignore
-    const user = request.user;
-    console.log(user)
-    const users:UserType[] = await UserModel.find()
-    //console.log(users)
-    response.status(200).send({message:"Hit getuser"})
+    const user = {
+        _id:request.user._id,
+        email:request.user.email,
+        name:request.user.name
+    }
+    response.status(200).send({user:user})
 }
 
 //@desc get user profile
