@@ -2,6 +2,7 @@ import {Request , Response } from "express"
 import { UserModel , UserType } from "../models/user.models"
 import bcrypt from "bcrypt"
 import generateToken from "../utils/generateToken"
+import { env } from "../config/environment"
 
 //export async function name (request:Request , response:Response){}
 //response.status.json({message: , })
@@ -19,8 +20,8 @@ export async function authenticateUser (request:Request , response:Response){
 
 
     if(user && (await (user as any).matchPassword(password) )){
-        generateToken(response , user._id)
-        response.status(201).json({message:"Succedfully authenticated!" , user:{
+       generateToken(response , user._id)
+       response.status(201).json({message:"Succedfully authenticated!" , user:{
             _id: user._id,
             name: user.name,
             email:user.email
@@ -72,10 +73,11 @@ export async function logoutUser (_request:Request , response:Response){
 //route POST /api/users/profile
 //@access Private
 export async function getUser (request:Request , response:Response){
-    console.log((request as any).user)
-    const {} = request.body
+    //@ts-ignore
+    const user = request.user;
+    console.log(user)
     const users:UserType[] = await UserModel.find()
-    console.log(users)
+    //console.log(users)
     response.status(200).send({message:"Hit getuser"})
 }
 

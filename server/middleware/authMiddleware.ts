@@ -7,16 +7,16 @@ export const protect  =  asyncHandler( async (req, res , next) => {
     let token
     let decoded:any
 
-    token = req.cookies
-    console.log("Helooooooooooooo" , token)
+    token = req.cookies.jwt
+    console.log(token)
     
     if(token){
         try {
             //@ts-ignore
             decoded = jwt.verify(token, env.JWT_SECRET!)
+            const user = await UserModel.findById(decoded.userId).select("-password").exec()
             //@ts-ignore
-            console.log("decoded token message",decoded)
-            (req as any).user  = await UserModel.findById(decoded.userId).select("-password")
+            req.user = user
             next()
         } catch (error) {
            res.status(401)
