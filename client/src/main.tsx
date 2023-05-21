@@ -7,12 +7,14 @@ import './index.css'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFound'
 import Login from './pages/Login'
+import RegisterPage from './pages/RegisterPage'
 
 const route = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App />}>
             <Route index={true} path="/" element={<HomePage />} />
             <Route path='login' element={<Login />}/>
+            <Route path='register' element={<RegisterPage />}/>
             <Route path="*" element={<NotFoundPage />}/>
         </Route>
     )
