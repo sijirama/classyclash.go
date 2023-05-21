@@ -1,4 +1,5 @@
 import {Card , Container , Button} from "react-bootstrap"
+import {LinkContainer} from "react-router-bootstrap"
 
 function Hero() {
   return (
@@ -13,8 +14,12 @@ function Hero() {
                 </p>
                 <p className="text-center mb-4 ">This also serves as a dev center for practicing web development full stack stuff.</p>
                 <div className="d-flex">
-                    <Button variant="primary" href="/login" className="me-3">Sign In</Button>
-                    <Button variant="secondary" href="/register" className="me-3">Sign Up</Button>
+                    <LinkContainer to="/login">
+                        <Button variant="primary" className="me-3">Sign In</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/register">
+                        <Button variant="secondary" href="/register" className="me-3">Sign Up</Button>
+                    </LinkContainer>
                 </div>
             </Card>
         </Container>
