@@ -19,7 +19,7 @@ export default function Header() {
         try {
             await logoutApiCall(null).unwrap()
             dispatch(logout(null))
-            navigate("/login")
+            navigate("login")
         } catch (err:any) {
             toast.error(err?.data?.message || err.error)
         }

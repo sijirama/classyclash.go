@@ -6,6 +6,7 @@ import FormContainer from '../components/FormContainer'
 import { useLoginMutation } from '../app/slices/userApiSlice'
 import { setCredentials } from '../app/slices/authSlice'
 import {toast} from "react-toastify"
+import Loader from '../components/Loader'
 
 
 function Login() {
@@ -27,7 +28,6 @@ function Login() {
 
     const submitHandler = async (e:any) => {
         e.preventDefault()
-        console.log("submit" , email , password)
         try {
            const res = await login({email , password}).unwrap() 
            dispatch(setCredentials({...res.user}))
@@ -63,6 +63,8 @@ function Login() {
                     onChange= { (e) => setPassword(e.target.value) }
                 ></Form.Control>
             </Form.Group>
+            
+            {isLoading ?? <Loader />}
 
             <Button variant="primary" type="submit" className='mt-3'>
                 Sign In
