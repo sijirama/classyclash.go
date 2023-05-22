@@ -9,7 +9,7 @@
     "client": "npm run dev --prefix client",
     "build-client": "npm install --prefix client && npm install typescript && npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "prod":"npm install && concurrently \"npm run build-client\" \"npm run server\" ",
+    "prod":"concurrently \"npm run build-client\" \"npm run server\" ",
     "build": "tsc"
   },
   "keywords": [],
