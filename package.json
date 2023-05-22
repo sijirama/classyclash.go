@@ -9,7 +9,7 @@
     "client": "npm run dev --prefix client",
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "prod":"concurrently \"npm run build-client\" \"npm run server\" ",
+    "prod":"npm install && concurrently \"npm run build-client\" \"npm run server\" ",
     "build": "tsc"
   },
   "keywords": [],
@@ -38,5 +38,9 @@
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+"engines": {
+    "npm": ">=9.0.0",
+    "node": ">=17.0.0"
   }
 }
