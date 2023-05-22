@@ -92,10 +92,10 @@ export async function updateUser (request:any , response:Response){
         user.name = request.body.name || user.name
         user.email = request.body.email || user.email
         if(request.body.password){
-            user.password = request.body.passwordpassword
+            user.password = request.body.password
         }
         const updatedUser = await user.save()
-        response.status(200).json({updatedUser:{
+        response.status(200).json({user:{
             _id:updatedUser._id,
             name:updatedUser.name,
             email:updatedUser.email

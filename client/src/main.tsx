@@ -12,6 +12,8 @@ import {store} from "./app/store"
 import { Provider } from 'react-redux'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './pages/Profile'
+import PrivateRoute from './components/PrivateRoute'
 
 const route = createBrowserRouter(
     createRoutesFromElements(
@@ -19,6 +21,11 @@ const route = createBrowserRouter(
             <Route index={true} path="/" element={<HomePage />} />
             <Route path='login' element={<Login />}/>
             <Route path='register' element={<RegisterPage />}/>
+
+            <Route path='' element={<PrivateRoute />}>
+                <Route path='profile' element={<Profile />}/>
+            </Route>
+
             <Route path="*" element={<NotFoundPage />}/>
         </Route>
     )
