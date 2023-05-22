@@ -1,4 +1,5 @@
 import Express from "express"
+import path from "path"
 import UserRouter from "./routes/user.routes"
 import * as ErrorMiddleware from "./middleware/errorHandler"
 import cookieParser from "cookie-parser"
@@ -14,6 +15,15 @@ connectToMongo()
 app.use(cookieParser())
 app.use(Express.json())
 app.use(Express.urlencoded({extended:false}))
+
+//NOTE: Deployment
+if(env.NODE_ENV === 'production'){
+    const __dirname = path.resolve()
+    app.use(Express.static(path.join(__dirname , "client/dist")))
+    app.get("*" , (req, res) =>{
+        res.sendFile(path.resolve(__dirname , "client" , "dist" , "index.html"))
+    })
+}
 
 //NOTE: routes
 app.get("/PING" , (_req, res) => res.send("PONG"))

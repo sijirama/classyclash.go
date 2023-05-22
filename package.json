@@ -7,7 +7,9 @@
     "start": "ts-node server/server.ts",
     "server": "nodemon --exec ts-node server/server",
     "client": "npm run dev --prefix client",
+    "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "prod":"concurrently \"npm run build-client\" \"npm run server\" ",
     "build": "tsc"
   },
   "keywords": [],
