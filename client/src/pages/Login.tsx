@@ -1,16 +1,42 @@
-import React , {useState} from 'react'
-import {Link} from "react-router-dom"
+import {useState , useEffect} from 'react'
+import {Link , useNavigate} from "react-router-dom"
+import { useAppSelector , useAppDispatch } from '../app/hooks'
 import {Form , Button , Row , Col} from "react-bootstrap"
 import FormContainer from '../components/FormContainer'
+import { useLoginMutation } from '../app/slices/userApiSlice'
+import { setCredentials } from '../app/slices/authSlice'
+import {toast} from "react-toastify"
+
 
 function Login() {
 
     const [email , setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
+    const [login , {isLoading}] = useLoginMutation()
+    const {userInfo} = useAppSelector((state) => state.auth)
+
+    useEffect (() => {
+            if(userInfo){
+                navigate("/")
+            }
+        } , [navigate , userInfo])
+
     const submitHandler = async (e:any) => {
         e.preventDefault()
         console.log("submit" , email , password)
+        try {
+           const res = await login({email , password}).unwrap() 
+           dispatch(setCredentials({...res.user}))
+           toast.success("Welcome to Hell!")
+           navigate("/")
+        } catch (err:any) {
+           const error = err?.data?.message || err.error
+           toast.error(error)
+        }
     }
 
   return (
