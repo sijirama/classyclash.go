@@ -26,6 +26,7 @@ function Profile() {
     useEffect(() => {
         setName(userInfo?.name)
         setEmail(userInfo?.email)
+        setPassword("")
     } , [userInfo.setName, userInfo.setEmail])
 
 
