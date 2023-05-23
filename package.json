@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && ts-node server/server.ts",
+    "start": "ts-node server/server.ts",
     "server": "npm install && nodemon --exec ts-node server/server",
     "client": "npm run dev --prefix client",
     "build-client": "npm install --prefix client && npm run build --prefix client",
@@ -13,7 +13,7 @@
     "buuild": "tsc",
 
 
-    "build":"cd client && npm install && npm run build "
+    "build":"npm install && cd client && npm install && npm run build"
 
 
   },
