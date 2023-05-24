@@ -31,6 +31,8 @@ export async function authenticateUser (request:Request , response:Response){
     }
 }
 
+
+
 //@desc Register a new user
 //route POST /api/users 
 //@access Public
