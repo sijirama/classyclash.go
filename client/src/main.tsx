@@ -14,6 +14,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
+import ProductsPage from './pages/Products/ProductsPage'
 
 const route = createBrowserRouter(
     createRoutesFromElements(
@@ -24,6 +25,7 @@ const route = createBrowserRouter(
 
             <Route path='' element={<PrivateRoute />}>
                 <Route path='profile' element={<Profile />}/>
+                <Route path="products" element={<ProductsPage />}/>
             </Route>
 
             <Route path="*" element={<NotFoundPage />}/>

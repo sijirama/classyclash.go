@@ -79,7 +79,8 @@ export async function getUser (request:any, response:Response){
     const user = {
         _id:request.user._id,
         email:request.user.email,
-        name:request.user.name
+        name:request.user.name,
+        savedProducts:request.user.savedproducts,
     }
     response.status(200).send({user:user})
 }

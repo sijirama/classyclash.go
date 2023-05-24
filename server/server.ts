@@ -1,6 +1,7 @@
 import Express from "express"
 import path from "path"
 import UserRouter from "./routes/user.routes"
+import ProductRouter from "./routes/products.routes"
 import * as ErrorMiddleware from "./middleware/errorHandler"
 import cookieParser from "cookie-parser"
 
@@ -28,6 +29,7 @@ if(env.NODE_ENV === 'production'){
 //NOTE: routes
 app.get("/PING" , (_req, res) => res.send("PONG"))
 app.use("/api/user" , UserRouter)
+app.use("/api/products" , ProductRouter)
 
 //NOTE: middleware that needs to be after routes
 app.use(ErrorMiddleware.notFound)

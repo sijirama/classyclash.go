@@ -5,7 +5,7 @@ export interface UserType extends mongoose.Document {
     name: string;
     email: string;
     password: string;
-
+    savedproducts: string[]
 }
 
 const UserSchema = new mongoose.Schema({
@@ -21,7 +21,11 @@ const UserSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    savedproducts:[{
+        type:String,
+    }],
+
 },{
     timestamps:true,
 })
