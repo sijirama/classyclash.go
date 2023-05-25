@@ -6,9 +6,9 @@ export const productSlice = apiSlice.injectEndpoints({
     endpoints:(builder) => ({
         saveProduct:builder.mutation({
             query:(data) =>({
-                url:`${PRODUCT_URL}}/saveproduct`,
+                url:`${PRODUCT_URL}/saveproduct`,
                 method: "POST",
-                body: data
+                body: {"productId":data}
             })
         }),
         unsaveProduct:builder.mutation({

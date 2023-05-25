@@ -1,8 +1,8 @@
 import React from 'react'
 import "./style.scss"
 import {useGetProductMutation} from "../../app/slices/productSlice"
-import ProductCard from './ProductCard'
 
+import ProductCard from './ProductCard'
 
 function ProductsPage() {
     
