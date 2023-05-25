@@ -15,7 +15,7 @@ export const productSlice = apiSlice.injectEndpoints({
             query:(data) => ({
                 url:`${PRODUCT_URL}/unsaveproduct`,
                 method: "POST",
-                body: data
+                body: {"productId":data}
             })
         }),
         getProduct:builder.mutation({

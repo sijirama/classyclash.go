@@ -2,7 +2,6 @@ import "./style.scss";
 import { useSaveProductMutation } from "../../app/slices/productSlice";
 import { toast } from "react-toastify";
 import { Tabs } from 'antd';
-import {Description , details} from "./utils"
 
 export interface Props {
   product: {
