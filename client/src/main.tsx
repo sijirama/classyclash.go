@@ -33,11 +33,10 @@ const route = createBrowserRouter(
     )
 )
 
+//</React.StrictMode>,
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 <Provider store={store}>
-  <React.StrictMode>
     <RouterProvider router={route} />
     <ToastContainer />
-  </React.StrictMode>,
 </Provider>
 )

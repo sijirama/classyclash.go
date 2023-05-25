@@ -1,0 +1,32 @@
+.productsmainpage{
+    border-top: 3px solid red;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.productcard{
+    display:flex;
+    width: 25rem;
+    //flex-direction:column;
+    //padding: 0.5rem;
+    margin: 1rem;
+    border: 1px solid red;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    
+}
+
+.productcardimage{
+    width:12rem;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.productcarddetails{
+    padding: 1rem;
+}
