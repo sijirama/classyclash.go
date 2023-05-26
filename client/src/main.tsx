@@ -17,6 +17,8 @@ import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
 import ProductsPage from './pages/Products/ProductsPage'
 
+
+
 const route = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App />}>

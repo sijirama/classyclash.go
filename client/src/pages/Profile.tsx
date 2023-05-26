@@ -1,5 +1,7 @@
 import  {useState , useEffect} from 'react'
 import {Link} from "react-router-dom"
+import {Message , Uploader , Loader} from "rsuite"
+import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import {Form , Button , Row } from "react-bootstrap"
 import FormContainer from '../components/FormContainer'
 
@@ -10,6 +12,16 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 
+//<Avatar size='lg' src={`${(userInfo as any).profilepicture}`} alt="profile" />
+
+function previewFile(file:any, callback:any) {
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    callback(reader.result);
+  };
+  reader.readAsDataURL(file);
+}
+
 
 function Profile() {
 
@@ -17,6 +29,9 @@ function Profile() {
     const [email , setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmpassword, setConfirmPassword] = useState("")
+
+    const [uploading, setUploading] = useState(false);
+    const [fileInfo, setFileInfo] = useState(null);
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -26,6 +41,7 @@ function Profile() {
     useEffect(() => {
         setName(userInfo?.name)
         setEmail(userInfo?.email)
+        setFileInfo(userInfo?.profilepicture)
         setPassword("")
     } , [userInfo.setName, userInfo.setEmail])
 
@@ -51,9 +67,42 @@ function Profile() {
   return (
     <FormContainer>
         <h1 className='fw-bold'>Update your Profile</h1>
+        
+        {/*NOTE: uploader component from rsuite */} 
+        
+            <Uploader
+      fileListVisible={false}
+      listType="picture"
+      action=""
+      onUpload={file => {
+        setUploading(true);
+        console.log(file.name)
+      }}
+      onSuccess={(response, file) => {
+        setUploading(false);
+        toast.success("Uploaded successfully")
+        console.log(response);
+      }}
+      onError={() => {
+        setFileInfo(null);
+        setUploading(false);
+        toast.error("Upload Failed")
+      }}
+    >
+      <button style={{ width: 150, height: 150 , border:"none" }}>
+        {uploading && <Loader backdrop center />}
+        {fileInfo ? (
+          <img src={fileInfo} width="100%" height="100%" />
+        ) : (
+          <AvatarIcon style={{ fontSize: 80 }} />
+        )}
+      </button>
+    </Uploader>
+        
+
+        {/*NOTE: uploader component from rsuite */} 
 
         <Form onSubmit={submitHandler}>
-
             <Form.Group className='my-2' controlId='name'>
                 <Form.Label>Your Name</Form.Label>
                 <Form.Control

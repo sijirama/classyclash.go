@@ -3,7 +3,6 @@ import {Outlet} from "react-router-dom"
 import {Container} from "react-bootstrap"
 
 function App() {
-
   return (
     <div className="App">
         <Header />
