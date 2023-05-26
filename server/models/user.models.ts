@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     savedproducts:[{
         type:String,
     }],
+    profilepicture:{
+        type:String,
+        default:"https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
+    }
 
 },{
     timestamps:true,

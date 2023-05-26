@@ -1,4 +1,4 @@
-import {Navbar , Nav , Container , NavDropdown , Badge} from "react-bootstrap"
+import {Navbar , Nav , Container , NavDropdown , } from "react-bootstrap"
 import {FaSignInAlt , FaSignOutAlt} from "react-icons/fa"
 import {LinkContainer} from "react-router-bootstrap"
 import { useNavigate } from "react-router-dom"
@@ -6,10 +6,12 @@ import { useAppSelector , useAppDispatch } from "../app/hooks"
 import { useLogoutMutation } from "../app/slices/userApiSlice"
 import { logout } from "../app/slices/authSlice"
 import { toast } from "react-toastify"
+import "../styles/components/Header.scss"
+import { Badge,  Avatar } from 'rsuite';
 
 export default function Header() {
 
-    const {userInfo} = useAppSelector((state) => state.auth)
+    const {userInfo}:any = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     
@@ -36,7 +38,15 @@ export default function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         {userInfo ? (
-                            <NavDropdown title={(userInfo as any).name}  id="username">
+                            <>
+                            <Nav.Link>
+                            {userInfo?.profilepicture && (
+                                <Badge content="30">
+                                    <Avatar size="md" circle src={userInfo?.profilepicture} alt={userInfo.name} />
+                                </Badge>
+                            )}
+                            </Nav.Link>
+                            <NavDropdown className="" title={(userInfo as any).name}  id="username">
                                 <LinkContainer to="/profile">
                                     <NavDropdown.Item>
                                         Profile
@@ -46,6 +56,7 @@ export default function Header() {
                                         Logout
                                     </NavDropdown.Item>
                             </NavDropdown>
+                            </>
                         ) : (
                             <>
                                     <LinkContainer to="/login">

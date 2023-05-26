@@ -12,6 +12,7 @@ import {store} from "./app/store"
 import { Provider } from 'react-redux'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'rsuite/dist/rsuite.min.css';
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
 import ProductsPage from './pages/Products/ProductsPage'

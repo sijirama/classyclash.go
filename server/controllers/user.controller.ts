@@ -24,7 +24,8 @@ export async function authenticateUser (request:Request , response:Response){
        response.status(201).json({message:"Succedfully authenticated!" , user:{
             _id: user._id,
             name: user.name,
-            email:user.email
+            email:user.email,
+            profilepicture:user.profilepicture,
         }})
     }else{
         response.status(401).json({message:"Invalid user or email"})
@@ -53,7 +54,8 @@ export async function registerUser (request:Request , response:Response){
         response.status(201).json({message:"Succedfully registered" , user:{
             _id: user._id,
             name: user.name,
-            email:user.email
+            email:user.email,
+            profilepicture:user.profilepicture,
         }})
     }else{
         response.status(401).json({message:"Unsuccessfull"})
