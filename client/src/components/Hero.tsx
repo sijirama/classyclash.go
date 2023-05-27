@@ -12,13 +12,13 @@ function Hero() {
                 <p className="text-center mb-4">
                     Full stack MERN application i use to practice web development stuff.
                 </p>
-                <p className="text-center mb-4 ">
+                <div className="text-center mb-4 ">
                 {userInfo ? (
-                   <p>Welocome {(userInfo as any).name}</p> 
+                   <p>Welcome {(userInfo as any).name}</p> 
                 ):(
                    <p>You have to be signed in to fully enjoy the short experience!</p> 
                 )}
-                </p>
+                </div>
                 { userInfo ? (
                     null
                 ):(

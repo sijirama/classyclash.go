@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@mantine/core": "^6.0.11",
+    "@mantine/hooks": "^6.0.11",
     "@types/react-router-bootstrap": "^0.26.0",
     "antd": "^5.5.1",
     "bootstrap": "^5.2.3",

@@ -96,6 +96,7 @@ export async function updateUser (request:any , response:Response){
     if(user){
         user.name = request.body.name || user.name
         user.email = request.body.email || user.email
+        user.profilepicture = request.body.profilepicture || user.profilepicture
         if(request.body.password){
             user.password = request.body.password
         }
@@ -103,7 +104,8 @@ export async function updateUser (request:any , response:Response){
         response.status(200).json({user:{
             _id:updatedUser._id,
             name:updatedUser.name,
-            email:updatedUser.email
+            email:updatedUser.email,
+            profilepicture:updatedUser.profilepicture,
         }})
     }else{
         response.status(404)

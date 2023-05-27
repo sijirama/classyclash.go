@@ -1,9 +1,6 @@
-.profilepicture{
-    border-radius:10rem;
-    border : solid 2px red;
-
-    img{
-        height: 100%;
-        width: 100%;
-    }
+.custom-dropdown , .dropdown-toggle{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -40,6 +40,6 @@ const route = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 <Provider store={store}>
     <RouterProvider router={route} />
-    <ToastContainer />
+    <ToastContainer position='bottom-right' autoClose="3500"/>
 </Provider>
 )

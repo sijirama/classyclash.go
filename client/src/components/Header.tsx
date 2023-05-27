@@ -38,7 +38,7 @@ export default function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         {userInfo ? (
-                            <>
+                            <div className="custom-dropdown">
                             <Nav.Link>
                             {userInfo?.profilepicture && (
                                 <Badge content="30">
@@ -46,7 +46,7 @@ export default function Header() {
                                 </Badge>
                             )}
                             </Nav.Link>
-                            <NavDropdown className="" title={(userInfo as any).name}  id="username">
+                            <NavDropdown className="custom-dropdown" title={(userInfo as any).name}  id="username">
                                 <LinkContainer to="/profile">
                                     <NavDropdown.Item>
                                         Profile
@@ -56,7 +56,7 @@ export default function Header() {
                                         Logout
                                     </NavDropdown.Item>
                             </NavDropdown>
-                            </>
+                            </div>
                         ) : (
                             <>
                                     <LinkContainer to="/login">
@@ -71,7 +71,6 @@ export default function Header() {
                                             Sign Up
                                         </Nav.Link>
                                     </LinkContainer>
-
                             </>
                         ) }
                    </Nav>

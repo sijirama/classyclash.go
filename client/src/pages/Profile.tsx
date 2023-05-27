@@ -4,12 +4,15 @@ import {Message , Uploader , Loader} from "rsuite"
 import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import {Form , Button , Row } from "react-bootstrap"
 import FormContainer from '../components/FormContainer'
-
+import { uploadToFirebaseandGetDownloadUrl } from '../utils/uploadFile';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import {useUpdateMutation } from '../app/slices/userApiSlice'
 import { setCredentials } from '../app/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { FileType } from 'rsuite/esm/Uploader';
+import { FileInput } from '@mantine/core';
+import { firebaseConfig } from '../utils/firebase';
 
 
 //<Avatar size='lg' src={`${(userInfo as any).profilepicture}`} alt="profile" />
@@ -28,10 +31,11 @@ function Profile() {
     const [name, setName] = useState("")
     const [email , setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [fileInfo, setFileInfo] = useState("");
+    const [file, setFile] = useState<FileType | null>(null);
     const [confirmpassword, setConfirmPassword] = useState("")
 
     const [uploading, setUploading] = useState(false);
-    const [fileInfo, setFileInfo] = useState(null);
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -45,51 +49,64 @@ function Profile() {
         setPassword("")
     } , [userInfo.setName, userInfo.setEmail])
 
+    const handleUpload = async (file:FileType) => {
+        try {
+        setUploading(true)
+        const downloadURL = await uploadToFirebaseandGetDownloadUrl(file);
+        setFileInfo(downloadURL);
+        //toast.success("Successfully uploaded")
+        //console.log(downloadURL)
+    } catch (error) {
+        setFileInfo("");
+        setUploading(false);
+        //toast.error("Failed to Upload")
+    }finally{
+        setUploading(false)
+        }
+    };
 
-        const submitHandler = async (e:any) => {
+
+    const submitHandler = async (e:any) => {
         e.preventDefault()
-        console.log("submit" , email , password , name , confirmpassword)
         if(password !== confirmpassword){
                 toast.error("Make sure passwords match!")
                 return
         }
         try {
-           const res = await update({ _id:userInfo._id ,email ,name ,password}).unwrap()
+           const res = await update({ _id:userInfo._id ,email ,name ,password , profilepicture:fileInfo}).unwrap()
+           //console.log(res)
            dispatch(setCredentials({...res.user}))
            toast.success("Successfully Updated")
            navigate("/")
         } catch (err:any) {
             toast.error(err?.data?.message || err.error)
-            console.error(err)
+            //console.error(err)
         }
     }
+
+    useEffect(() => {
+            file && handleUpload(file)
+        } , [file])
+
+
 
   return (
     <FormContainer>
         <h1 className='fw-bold'>Update your Profile</h1>
         
         {/*NOTE: uploader component from rsuite */} 
-        
+
             <Uploader
       fileListVisible={false}
       listType="picture"
       action=""
-      onUpload={file => {
+      onUpload={fileUploaded => {
         setUploading(true);
-        console.log(file.name)
-      }}
-      onSuccess={(response, file) => {
+        setFile(fileUploaded)
         setUploading(false);
-        toast.success("Uploaded successfully")
-        console.log(response);
       }}
-      onError={() => {
-        setFileInfo(null);
-        setUploading(false);
-        toast.error("Upload Failed")
-      }}
-    >
-      <button style={{ width: 150, height: 150 , border:"none" }}>
+      >
+      <button style={{ width: 150, height: 150 }}>
         {uploading && <Loader backdrop center />}
         {fileInfo ? (
           <img src={fileInfo} width="100%" height="100%" />
@@ -98,9 +115,8 @@ function Profile() {
         )}
       </button>
     </Uploader>
-        
 
-        {/*NOTE: uploader component from rsuite */} 
+       {/*NOTE: uploader component from rsuite */} 
 
         <Form onSubmit={submitHandler}>
             <Form.Group className='my-2' controlId='name'>
