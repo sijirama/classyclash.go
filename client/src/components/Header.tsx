@@ -1,19 +1,22 @@
 import {Navbar , Nav , Container , NavDropdown , } from "react-bootstrap"
 import {FaSignInAlt , FaSignOutAlt} from "react-icons/fa"
 import {LinkContainer} from "react-router-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { useNavigate , Link } from "react-router-dom"
 import { useAppSelector , useAppDispatch } from "../app/hooks"
 import { useLogoutMutation } from "../app/slices/userApiSlice"
 import { logout } from "../app/slices/authSlice"
 import { toast } from "react-toastify"
 import "../styles/components/Header.scss"
-import { Badge,  Avatar } from 'rsuite';
+import { Badge,  Avatar , Popover , Whisper } from 'rsuite';
+import useScreenType from "../utils/useScreenType"
+import { FaBars } from 'react-icons/fa';
 
 export default function Header() {
 
     const {userInfo}:any = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const screenType = useScreenType()
     
     const [logoutApiCall] = useLogoutMutation()
 
@@ -27,12 +30,40 @@ export default function Header() {
         }
     }
 
+    const customPopoverStyles = {
+        backgroundColor:"#212529",
+        padding:'0.5rem 2.4rem',
+        borderRadius:"0.5rem"
+    }
+
+const speaker = (
+  <Popover  className="popover" style={customPopoverStyles}>
+    <Link to="/profile">Update Profile</Link>
+    <p onClick={logOutHandler}>Log out</p>
+  </Popover>
+);
+//{(userInfo as any).name}
+ //                            <NavDropdown className="custom-dropdown" title="" id="username">
+ //                                <LinkContainer to="/profile">
+ //                                    <NavDropdown.Item>
+ //                                        Profile
+ //                                    </NavDropdown.Item>
+ //                                </LinkContainer>
+ //                                    <NavDropdown.Item onClick={logOutHandler}>
+ //                                        Logout
+ //                                    </NavDropdown.Item>
+ //                            </NavDropdown>
+ // 
   return (
     <header>
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-            <Container>
+           <Container>
                 <LinkContainer to="/">
-                    <Navbar.Brand>SandBox</Navbar.Brand>
+                    <Navbar.Brand>
+                       <h4 className="header">
+                            sandbox
+                       </h4> 
+                    </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -40,23 +71,39 @@ export default function Header() {
                         {userInfo ? (
                             <div className="custom-dropdown">
                             <Nav.Link>
-                            {userInfo?.profilepicture && (
-                                <Badge content="30">
-                                    <Avatar size="md" circle src={userInfo?.profilepicture} alt={userInfo.name} />
-                                </Badge>
+                            {screenType !== "mobile" && userInfo?.profilepicture && (
+                                <Whisper 
+                                    placement="bottom"
+                                    trigger="hover"
+                                    controlId="control-id-hover-enterable"
+                                    speaker={speaker}
+                                    enterable
+                                >
+                                    <Badge content="">
+                                        <Avatar size="md" circle src={userInfo?.profilepicture} alt={userInfo.name} />
+                                    </Badge>
+                                </Whisper>
                             )}
                             </Nav.Link>
-                            <NavDropdown className="custom-dropdown" title={(userInfo as any).name}  id="username">
-                                <LinkContainer to="/profile">
-                                    <NavDropdown.Item>
-                                        Profile
-                                    </NavDropdown.Item>
-                                </LinkContainer>
-                                    <NavDropdown.Item onClick={logOutHandler}>
-                                        Logout
-                                    </NavDropdown.Item>
-                            </NavDropdown>
-                            </div>
+                            {/* incase you want that stuff back to drop down with your name*/}
+                            {screenType === "mobile" ? (
+                                <div className ="mobileOptions">
+                                     <LinkContainer to="/profile">
+                                        <Nav.Link className="link">
+                                            <FaSignInAlt />
+                                            Profile
+                                        </Nav.Link>
+                                    </LinkContainer>
+                                    <div onClick={logOutHandler}>
+                                        <Nav.Link className="link">
+                                            <FaSignOutAlt />
+                                            Logout
+                                        </Nav.Link>
+                                    </div>
+                                </div>
+                            ):(null)
+                            }
+                           </div>
                         ) : (
                             <>
                                     <LinkContainer to="/login">
@@ -80,3 +127,5 @@ export default function Header() {
     </header>
   )
 }
+
+

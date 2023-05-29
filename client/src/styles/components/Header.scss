@@ -1,6 +1,57 @@
+.navbar-brand {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.header{
+    font-family: 'DM Sans', sans-serif;
+    font-size:2.3rem;
+    text-decoration: none;
+    font-weight:bold;
+
+    &:hover{
+        text-decoration: none;
+        &:hover , &:focus , &:active{
+            text-decoration: none;
+        }
+    }
+}
+
 .custom-dropdown , .dropdown-toggle{
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.mobileOptions{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .link{
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}
+
+.popover{
+    background: grey;
+
+
+    a , p{
+        color: white;
+        text-decoration: none;
+        font-size:1rem;
+        cursor: pointer;
+
+        &{
+            &:hover{
+                text-decoration: none;
+                color:pink;
+            }
+        }
+    }
 }
