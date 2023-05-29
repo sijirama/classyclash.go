@@ -40,6 +40,9 @@ export default function Header() {
 const speaker = (
   <Popover  className="popover" style={customPopoverStyles}>
     <p>
+        <Link to="/products">Products</Link>
+    </p>
+    <p>
         <Link to="/profile">Update Profile</Link>
     </p>
     <p>
