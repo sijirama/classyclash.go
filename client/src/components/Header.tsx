@@ -59,7 +59,7 @@ const speaker = (
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
            <Container>
                 <LinkContainer to="/">
-                    <Navbar.Brand>
+                    <Navbar.Brand style={{"textDecoration":"none"}}>
                        <h4 className="header">
                             sandbox
                        </h4> 
