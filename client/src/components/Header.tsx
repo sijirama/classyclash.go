@@ -33,12 +33,18 @@ export default function Header() {
     const customPopoverStyles = {
         backgroundColor:"#212529",
         padding:'0.5rem 2.4rem',
-        borderRadius:"0.5rem"
+        borderRadius:"0.5rem",
+        display:"flex",
     }
 
 const speaker = (
   <Popover  className="popover" style={customPopoverStyles}>
-    <Link to="/profile">Update Profile</Link>
+    <p>
+        <Link to="/profile">Update Profile</Link>
+    </p>
+    <p>
+        <Link to="/about">About sandbox</Link>
+    </p>
     <p onClick={logOutHandler}>Log out</p>
   </Popover>
 );
@@ -92,6 +98,12 @@ const speaker = (
                                         <Nav.Link className="link">
                                             <FaSignInAlt />
                                             Profile
+                                        </Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="/about">
+                                        <Nav.Link className="link">
+                                            <FaSignInAlt />
+                                            About 
                                         </Nav.Link>
                                     </LinkContainer>
                                     <div onClick={logOutHandler}>

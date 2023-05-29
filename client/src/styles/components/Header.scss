@@ -1,3 +1,7 @@
+a{
+    color:white
+}
+
 .navbar-brand {
     text-decoration: none;
   &:hover {
@@ -44,6 +48,8 @@
 
 .popover{
     background: grey;
+    display: flex;
+    flex-direction: column;
 
 
     a , p{
@@ -51,6 +57,10 @@
         text-decoration: none;
         font-size:1rem;
         cursor: pointer;
+            &:hover , &:focus , &:active{
+                text-decoration: none;
+                color: white;
+            }
 
         &{
             &:hover{

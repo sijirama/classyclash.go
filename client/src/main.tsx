@@ -16,6 +16,7 @@ import 'rsuite/dist/rsuite.min.css';
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
 import ProductsPage from './pages/Products/ProductsPage'
+import About from './pages/About'
 
 
 
@@ -29,6 +30,7 @@ const route = createBrowserRouter(
             <Route path='' element={<PrivateRoute />}>
                 <Route path='profile' element={<Profile />}/>
                 <Route path="products" element={<ProductsPage />}/>
+                <Route path="about" element={<About/>}/>
             </Route>
 
             <Route path="*" element={<NotFoundPage />}/>
