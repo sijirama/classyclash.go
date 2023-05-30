@@ -37,6 +37,9 @@ a{
 .mobileOptions{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    //border: solid red 2px;
+    width: 100%;
     gap: 0.4rem;
 
     .link{

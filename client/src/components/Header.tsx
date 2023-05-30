@@ -9,7 +9,7 @@ import { toast } from "react-toastify"
 import "../styles/components/Header.scss"
 import { Badge,  Avatar , Popover , Whisper } from 'rsuite';
 import useScreenType from "../utils/useScreenType"
-import { FaBars } from 'react-icons/fa';
+import { AiOutlineShoppingCart} from 'react-icons/ai';
 
 export default function Header() {
 
@@ -97,6 +97,13 @@ const speaker = (
                             {/* incase you want that stuff back to drop down with your name*/}
                             {screenType === "mobile" ? (
                                 <div className ="mobileOptions">
+                                     <LinkContainer to="/products">
+                                        <Nav.Link className="link">
+                                            <AiOutlineShoppingCart />
+                                            Products
+                                        </Nav.Link>
+                                    </LinkContainer>
+
                                      <LinkContainer to="/profile">
                                         <Nav.Link className="link">
                                             <FaSignInAlt />
