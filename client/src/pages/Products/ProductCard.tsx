@@ -2,6 +2,8 @@ import "./style.scss";
 import { useSaveProductMutation } from "../../app/slices/productSlice";
 import { toast } from "react-toastify";
 import { Tabs } from 'antd';
+import {AiOutlineHeart} from "react-icons/ai"
+import "../../styles/components/ProductCard.scss"
 
 export interface Props {
   product: {
@@ -34,19 +36,28 @@ function ProductCard({ product }: Props) {
             toast.success("Product failed to save to wishlist.")
         }
     }
+            //<p>{`${product.stock} left`}</p>
     
   return (
     <div className="productcard">
-        <img src={product.images[0]} alt="image" className="productcardimage" />
+        <div className="product-card-image">
+            <img src={product.images[0]} alt="image" className="productcardimage" />
+        </div>
         <div className="productcarddetails">
-        <div>
-            <p>{product.title}</p>
-            <p>{`$${product.price}`}</p>
-            <p>{`${product.stock} left`}</p>
-            <p>{`${product.discountPercentage} off`}</p>
+        <div className="product-card">
+            <p className="product-card-category">{product.category}</p>
+            <p className="product-card-title">{product.title}</p>
+            <p className="product-card-description">{product.description}</p>
+            <div className="product-card-price-and-discount">
+                <p className="product-card-price">{`$${product.price}`}</p>
+                <p className="product-card-discount">{`${product.discountPercentage} off`}</p>
+            </div>
         </div>
  
-            <button onClick={saveToWishlist}>Add to Wishlist</button>
+        <button onClick={saveToWishlist} className="product-card-button-wishlist">
+        <AiOutlineHeart />
+        Add to Wishlist
+        </button>
         </div>
     </div>
   )
