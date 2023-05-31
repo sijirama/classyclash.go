@@ -1,11 +1,15 @@
 import ProfileCard from "../components/ProfileCard"
+import "../styles/pages/Homepage.scss"
 
 function HomePage() {
   return (
     <main>
-        <ProfileCard />
+        <div>
+            <ProfileCard />
+        </div>
+        <div></div>
+        <div></div>
     </main>
-
   )
 }
 
