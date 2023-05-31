@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import { FileType } from 'rsuite/esm/Uploader';
 import { FileInput } from '@mantine/core';
 import { firebaseConfig } from '../utils/firebase';
+import Autocomplete from "react-google-autocomplete";
 
 
 //<Avatar size='lg' src={`${(userInfo as any).profilepicture}`} alt="profile" />
@@ -34,6 +35,9 @@ function Profile() {
     const [fileInfo, setFileInfo] = useState("");
     const [file, setFile] = useState<FileType | null>(null);
     const [confirmpassword, setConfirmPassword] = useState("")
+
+    const [address, setAddress] = useState("")
+    const [bio, setBio] = useState("")
 
     const [uploading, setUploading] = useState(false);
 
@@ -73,8 +77,8 @@ function Profile() {
                 return
         }
         try {
-           const res = await update({ _id:userInfo._id ,email ,name ,password , profilepicture:fileInfo}).unwrap()
-           //console.log(res)
+           const res = await update({ _id:userInfo._id ,email ,name ,password , profilepicture:fileInfo , bio , address}).unwrap()
+           console.log(res)
            dispatch(setCredentials({...res.user}))
            toast.success("Successfully Updated")
            navigate("/")
@@ -138,6 +142,32 @@ function Profile() {
                     onChange= { (e) => setEmail(e.target.value) }
                 ></Form.Control>
             </Form.Group>
+
+       {/*NOTE:  bio*/} 
+            <Form.Group className='my-2' controlId='bio'>
+                <Form.Label>Bio</Form.Label>
+                <Form.Control
+                    type='text'
+                    placeholder=''
+                    value={bio}
+                    onChange= { (e) => setBio(e.target.value) }
+                ></Form.Control>
+            </Form.Group>
+
+
+
+       {/*NOTE:  address*/} 
+            <Form.Group className='my-2' controlId='address'>
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                    type='text'
+                    placeholder=''
+                    value={address}
+                    onChange= { (e) => setAddress(e.target.value) }
+                ></Form.Control>
+            </Form.Group>
+
+
         
             <Form.Group className='my-2' controlId='password'>
                 <Form.Label>Password</Form.Label>

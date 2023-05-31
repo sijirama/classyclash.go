@@ -5,6 +5,8 @@ export interface UserType extends mongoose.Document {
     name: string;
     email: string;
     password: string;
+    bio: string;
+    address: string;
     savedproducts: string[]
 }
 
@@ -22,6 +24,14 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    bio:{
+        type:String,
+    },
+
+    address:{
+        type:String,
+    },
+
     savedproducts:[{
         type:String,
     }],

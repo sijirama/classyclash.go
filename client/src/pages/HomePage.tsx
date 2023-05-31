@@ -1,7 +1,11 @@
+import ProfileCard from "../components/ProfileCard"
 
 function HomePage() {
   return (
-    <p></p>
+    <main>
+        <ProfileCard />
+    </main>
+
   )
 }
 

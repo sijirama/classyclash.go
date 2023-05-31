@@ -26,6 +26,8 @@ export async function authenticateUser (request:Request , response:Response){
             name: user.name,
             email:user.email,
             profilepicture:user.profilepicture,
+            bio: user.bio,
+            address:user.address
         }})
     }else{
         response.status(401).json({message:"Invalid user or email"})
@@ -38,7 +40,7 @@ export async function authenticateUser (request:Request , response:Response){
 //route POST /api/users 
 //@access Public
 export async function registerUser (request:Request , response:Response){
-    const {name , email , password} = request.body
+    const {name , email , password , bio , address} = request.body
     const userExists = await UserModel.findOne({email: email})
     if(userExists){
         response.status(401)
@@ -47,7 +49,9 @@ export async function registerUser (request:Request , response:Response){
     const user = await UserModel.create({
         name: name,
         email:email,
-        password:password
+        password:password,
+        bio: bio,
+        address:address
     })
     if(user){
         generateToken(response , user._id)
@@ -55,6 +59,8 @@ export async function registerUser (request:Request , response:Response){
             _id: user._id,
             name: user.name,
             email:user.email,
+            address:user.address,
+            bio:user.bio,
             profilepicture:user.profilepicture,
         }})
     }else{
@@ -96,6 +102,8 @@ export async function updateUser (request:any , response:Response){
     if(user){
         user.name = request.body.name || user.name
         user.email = request.body.email || user.email
+        user.address = request.body.address || user.address
+        user.bio = request.body.bio || user.bio
         user.profilepicture = request.body.profilepicture || user.profilepicture
         if(request.body.password){
             user.password = request.body.password
@@ -106,6 +114,8 @@ export async function updateUser (request:any , response:Response){
             name:updatedUser.name,
             email:updatedUser.email,
             profilepicture:updatedUser.profilepicture,
+            bio:updatedUser.bio,
+            address:updatedUser.address
         }})
     }else{
         response.status(404)
