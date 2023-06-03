@@ -18,10 +18,12 @@ export default function ProfileCard() {
         <div className="profilecard-details">
             <p className="name">{username}</p>
             <p className="bio">{userInfo?.bio}</p>
+            {userInfo.address ? (
             <p className="address">
                 <HiLocationMarker />
                 {userInfo?.address}
             </p>
+            ) : (null)}
         </div>
     </div>
   )
