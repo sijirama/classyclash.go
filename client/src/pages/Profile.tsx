@@ -137,6 +137,7 @@ function Profile() {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                     type='email'
+                    disabled = {true}
                     placeholder='Enter your Email Address'
                     value={email}
                     onChange= { (e) => setEmail(e.target.value) }
