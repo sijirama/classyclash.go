@@ -1,35 +1,41 @@
-import '@/styles/globals.css'
-import { Inter } from "next/font/google"
-import { cn } from '@/lib/utils'
-import { Navbar } from '@/components/Navbar'
-import { Toaster } from "@/components/ui/toaster"
+import "@/styles/globals.css";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Navbar } from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
-    title: 'alma',
-    description: 'university communities for students'
-}
+    title: "alma",
+    description: "university communities for students",
+};
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 //this is my change
 
 export default function RootLayout({
     children,
-    authModal
+    authModal,
 }: {
-    children: React.ReactNode
-    authModal: React.ReactNode
+    children: React.ReactNode;
+    authModal: React.ReactNode;
 }) {
     return (
-        <html lang='en' className={cn("bg-white text-slate-900 antialiased light", inter.className)}>
-            <body className='min-h-screen pt-12 bg-slate-50 antialiased'>
+        <html
+            lang="en"
+            className={cn(
+                "bg-white text-slate-900 antialiased light",
+                inter.className,
+            )}
+        >
+            <body className="min-h-screen pt-12 bg-slate-50 antialiased">
                 {/* @ts-expect-error server components  */}
                 <Navbar />
                 {authModal}
-                <div className='container max-w-7xl mx-auto h-full pt-12'>
+                <div className="container max-w-7xl mx-auto h-full pt-12">
                     {children}
                 </div>
                 <Toaster />
             </body>
         </html>
-    )
+    );
 }
