@@ -10,6 +10,7 @@ export const metadata = {
 }
 
 const inter = Inter({ subsets: ["latin"] })
+//this is my change
 
 export default function RootLayout({
     children,
