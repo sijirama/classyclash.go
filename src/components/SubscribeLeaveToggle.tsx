@@ -11,15 +11,19 @@ import { useRouter } from "next/navigation";
 interface Props {
     communityId: string;
     communityName: string;
+    isSubscribed: boolean;
 }
 
-function SubscribeLeaveToggle({ communityId, communityName }: Props) {
-    const isSubscribed = false;
-
+function SubscribeLeaveToggle({
+    communityId,
+    communityName,
+    isSubscribed,
+}: Props) {
     const { loginToast } = useCustomToast();
     const router = useRouter();
 
-    const {} = useMutation({
+    // join the community
+    const { mutate: joinCommunity, isLoading: isSubLoading } = useMutation({
         mutationFn: async () => {
             const payload: CommunitySubscriptionPayload = {
                 communityId,
@@ -57,10 +61,63 @@ function SubscribeLeaveToggle({ communityId, communityName }: Props) {
         },
     });
 
+    // leave the community
+    const { mutate: leaveCommunity, isLoading: isUnSubLoading } = useMutation({
+        mutationFn: async () => {
+            const payload: CommunitySubscriptionPayload = {
+                communityId,
+            };
+            const { data } = await axios.post(
+                "/api/community/unsubscribe",
+                payload,
+            );
+            return data as string;
+        },
+
+        onSuccess: (data) => {
+            startTransition(() => {
+                router.refresh();
+            });
+
+            return toast({
+                title: "Subscribed",
+                description: `You are now unsubscribed from com/${communityName}`,
+            });
+        },
+
+        onError: (err) => {
+            if (err instanceof AxiosError) {
+                if (err.response?.status === 401) {
+                    return loginToast();
+                }
+            }
+
+            return toast({
+                title: "There was a problem trying to unsubscribe ",
+                description: `Could not unsubscribe from ${communityName}, Please try again later`,
+                variant: "destructive",
+            });
+        },
+    });
+
+    const isAccLoading = isSubLoading || isUnSubLoading;
+
     return isSubscribed ? (
-        <Button className="w-full mt-1 mb-4">Leave community</Button>
+        <Button
+            disabled={isAccLoading}
+            onClick={() => leaveCommunity()}
+            className="w-full mt-1 mb-4"
+        >
+            Leave community
+        </Button>
     ) : (
-        <Button className="w-full mt-1 mb-4">Join community</Button>
+        <Button
+            disabled={isAccLoading}
+            onClick={() => joinCommunity()}
+            className="w-full mt-1 mb-4"
+        >
+            Join community
+        </Button>
     );
 }
 

@@ -94,10 +94,11 @@ const Layout = async ({
                                 </div>
                             ) : null}
 
-                            {community.creatorId === session?.user.id ? (
+                            {community.creatorId !== session?.user.id ? (
                                 <SubscribeLeaveToggle
                                     communityId={community.id}
                                     communityName={community.name}
+                                    isSubscribed={isSubscribed}
                                 />
                             ) : null}
                         </dl>
