@@ -3,8 +3,11 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useForm } from "react-hook-form";
 import { PostType, PostValidator } from "@/lib/validators/posts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
+import { uploadFiles } from "@/lib/uploadthing";
+import { object } from "zod";
+import { toast } from "@/hooks/use-toast";
 
 interface EditorProps {
     communityId: string;
@@ -24,11 +27,10 @@ const Editor = ({ communityId }: EditorProps) => {
         },
     });
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-    };
-
+    const _titleRef = useRef<HTMLTextAreaElement>(null);
     const ref = useRef<EditorJS>();
+    const [isMounted, setIsMounted] = useState<boolean>(false);
+
     const initializeEditor = useCallback(async () => {
         const EditorJS = (await import("@editorjs/editorjs")).default;
         const Header = (await import("@editorjs/header")).default;
@@ -57,23 +59,103 @@ const Editor = ({ communityId }: EditorProps) => {
                             endpoint: "/api/link",
                         },
                     },
+                    image: {
+                        class: Image,
+                        config: {
+                            uploader: {
+                                async uploadByFile(file: File) {
+                                    const [res] = await uploadFiles(
+                                        [file],
+                                        "imageUploader",
+                                    );
+                                    return {
+                                        success: 1,
+                                        file: { url: res.fileUrl },
+                                    };
+                                },
+                            },
+                        },
+                    },
+                    list: List,
+                    code: Code,
+                    inlineCode: InlineCode,
+                    table: Table,
+                    embed: Embed,
                 },
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setIsMounted(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (Object.keys(errors).length) {
+            for (const [_key, value] of Object.entries(errors)) {
+                toast({
+                    title: "something went wrong",
+                    description: (value as { message: string }).message,
+                    variant: "destructive",
+                });
+            }
+        }
+    }, [errors]);
+
+    useEffect(() => {
+        const init = async () => {
+            await initializeEditor();
+
+            setTimeout(() => {
+                _titleRef.current?.focus();
+            }, 0);
+        };
+        if (isMounted) {
+            init();
+            return () => {
+                ref.current?.destroy();
+                ref.current = undefined;
+            };
+        }
+    }, [isMounted, initializeEditor]);
+
+    const { ref: titleRef, ...rest } = register("title");
+
+    const onSubmit = (data: PostType) => {
+        const blocks = ref.current?.save();
+
+        const payload: PostType = {
+            title: data.title,
+            content: blocks,
+            communityId,
+        };
+    };
+
+    if (!isMounted) {
+        return null;
+    }
 
     return (
         <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
             <form
                 id="community-post-form"
                 className="w-fit"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit((e) => {})}
             >
                 <div className="prose prose-stone dark:prose-invert">
                     <TextareaAutosize
+                        ref={(e) => {
+                            titleRef(e);
+                            //@ts-ignore
+                            _titleRef.current = e;
+                        }}
+                        {...rest}
                         placeholder="title"
                         className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none"
                     />
+                    <div id="editor" className="min-h-[500px] w-full " />
                 </div>
             </form>
         </div>
