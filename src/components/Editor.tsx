@@ -8,6 +8,9 @@ import type EditorJS from "@editorjs/editorjs";
 import { uploadFiles } from "@/lib/uploadthing";
 import { object } from "zod";
 import { toast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { usePathname, useRouter } from "next/navigation";
 
 interface EditorProps {
     communityId: string;
@@ -121,16 +124,52 @@ const Editor = ({ communityId }: EditorProps) => {
         }
     }, [isMounted, initializeEditor]);
 
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const { mutate: CreatePost } = useMutation({
+        mutationFn: async ({ title, content, communityId }: PostType) => {
+            const payload: PostType = {
+                title,
+                content,
+                communityId,
+            };
+            const { data } = await axios.post(
+                "/api/community/post/create",
+                payload,
+            );
+            return data;
+        },
+        onError: (_err) => {
+            toast({
+                title: "Something went wrong",
+                description: "Your post was not published",
+                variant: "destructive",
+            });
+        },
+        onSuccess: () => {
+            const newpathname = pathname.split("/").slice(0, -1).join("/");
+            router.push(newpathname);
+            router.refresh();
+
+            return toast({
+                description: "Your post has been published",
+            });
+        },
+    });
+
     const { ref: titleRef, ...rest } = register("title");
 
-    const onSubmit = (data: PostType) => {
-        const blocks = ref.current?.save();
+    const onSubmit = async (data: PostType) => {
+        const blocks = await ref.current?.save();
 
         const payload: PostType = {
             title: data.title,
             content: blocks,
             communityId,
         };
+        console.log(payload);
+        CreatePost(payload);
     };
 
     if (!isMounted) {
@@ -142,7 +181,7 @@ const Editor = ({ communityId }: EditorProps) => {
             <form
                 id="community-post-form"
                 className="w-fit"
-                onSubmit={handleSubmit((e) => {})}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="prose prose-stone dark:prose-invert">
                     <TextareaAutosize
@@ -155,7 +194,7 @@ const Editor = ({ communityId }: EditorProps) => {
                         placeholder="title"
                         className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none"
                     />
-                    <div id="editor" className="min-h-[500px] w-full " />
+                    <div id="editor" className="min-h-[500px] max-w-[350px]" />
                 </div>
             </form>
         </div>
