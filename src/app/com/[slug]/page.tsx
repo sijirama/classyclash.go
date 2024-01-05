@@ -1,4 +1,5 @@
 import MiniCreatePost from "@/components/MiniCreatePost";
+import { PostFeed } from "@/components/PostFeed";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 import { getUserSession } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -41,6 +42,7 @@ export default async function page({ params }: Props) {
             </h1>
             <MiniCreatePost session={session} />
             {/* TODO: show posts from feed */}
+            <PostFeed initialPost={community.posts} communityName={community.name} />
         </main>
     );
 }
