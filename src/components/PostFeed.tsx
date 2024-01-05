@@ -42,7 +42,7 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
     const session = useSession();
 
     return (
-        <ul className="flex flex-col col-span-2 space-y-6">
+        <ul className="flex flex-col col-span-2 space-y-6 mt-4">
             {posts.map((post, index) => {
                 const votesAmtount = post.votes.reduce((sum, vote) => {
                     if (vote.type === "UP") return sum + 1;
@@ -57,11 +57,11 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
                 if (index == posts.length - 1) {
                     return (
                         <li key={post.id} ref={ref}>
-                            <Post />
+                            <Post post={post} communityName={post.community.name} />
                         </li>
                     );
                 } else {
-                    return <Post />;
+                    return <Post post={post} communityName={post.community.name} />;
                 }
             })}
         </ul>
