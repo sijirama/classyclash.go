@@ -57,11 +57,21 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
                 if (index == posts.length - 1) {
                     return (
                         <li key={post.id} ref={ref}>
-                            <Post post={post} communityName={post.community.name} />
+                            <Post
+                                commentAmount={post.comments.length}
+                                post={post}
+                                communityName={post.community.name}
+                            />
                         </li>
                     );
                 } else {
-                    return <Post post={post} communityName={post.community.name} />;
+                    return (
+                        <Post
+                            commentAmount={post.comments.length}
+                            post={post}
+                            communityName={post.community.name}
+                        />
+                    );
                 }
             })}
         </ul>
