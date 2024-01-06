@@ -3,6 +3,9 @@ import { Post, User, Vote } from "@prisma/client";
 import { useRef } from "react";
 import { FiMessageSquare } from "react-icons/fi";
 import EditorOutput from "./EditorOutput";
+import PostVoteClient from "./post-vote/PostVoteClient";
+
+type PartialVote = Pick<Vote, "type">;
 
 interface PostProps {
     communityName: string;
@@ -11,18 +14,27 @@ interface PostProps {
         votes: Vote[];
     };
     commentAmount: number;
+    votesAmt: number;
+    currentVote?: PartialVote;
 }
 
 export default function Post({
     communityName,
     post,
     commentAmount,
+    votesAmt: _votesAmt,
+    currentVote,
 }: PostProps) {
     const pRef = useRef<HTMLDivElement>(null);
     return (
         <div className="rounded-md shadow bg-white">
             <div className="px-6 py-4 flex justify-between">
                 {/* post votes */}
+                <PostVoteClient
+                    postId={post.id}
+                    initialVote={currentVote?.type}
+                    initialVotesAmount={_votesAmt}
+                />
 
                 <div className="w-0 flex-1">
                     <div className="max-h-40 mt-1 text-xs text-gray-500">

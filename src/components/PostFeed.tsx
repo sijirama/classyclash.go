@@ -61,6 +61,8 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
                                 commentAmount={post.comments.length}
                                 post={post}
                                 communityName={post.community.name}
+                                currentVote={currentVote}
+                                votesAmt={votesAmtount}
                             />
                         </li>
                     );
@@ -70,6 +72,8 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
                             commentAmount={post.comments.length}
                             post={post}
                             communityName={post.community.name}
+                            currentVote={currentVote}
+                            votesAmt={votesAmtount}
                         />
                     );
                 }
