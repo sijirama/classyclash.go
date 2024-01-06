@@ -28,6 +28,9 @@ export default async function page({ params }: Props) {
                 },
             },
         },
+        orderBy: {
+            createdAt: "desc",
+        },
         take: INFINITE_SCROLL_PAGINATION_RESULTS,
     });
 
@@ -42,7 +45,10 @@ export default async function page({ params }: Props) {
             </h1>
             <MiniCreatePost session={session} />
             {/* TODO: show posts from feed */}
-            <PostFeed initialPost={community.posts} communityName={community.name} />
+            <PostFeed
+                initialPost={community.posts}
+                communityName={community.name}
+            />
         </main>
     );
 }

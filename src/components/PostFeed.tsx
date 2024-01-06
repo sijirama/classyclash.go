@@ -5,7 +5,7 @@ import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Post from "./Post";
 
 interface PostFeedProps {
@@ -41,6 +41,12 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
 
     const session = useSession();
 
+    useEffect(() => {
+        if (entry?.isIntersecting) {
+            fetchNextPage();
+        }
+    }, [entry, fetchNextPage]);
+
     return (
         <ul className="flex flex-col col-span-2 space-y-6 mt-4">
             {posts.map((post, index) => {
@@ -69,6 +75,7 @@ export function PostFeed({ initialPost, communityName }: PostFeedProps) {
                 } else {
                     return (
                         <Post
+                            key={post.id}
                             commentAmount={post.comments.length}
                             post={post}
                             communityName={post.community.name}
