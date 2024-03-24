@@ -3,20 +3,21 @@ package basecharacter
 import ray "github.com/gen2brain/raylib-go/raylib"
 
 type BaseCharacter struct {
+	Texture   ray.Texture2D
+	Run       ray.Texture2D
+	Idle      ray.Texture2D
+	Width     float32
+	Height    float32
+	MaxFrames int
+
 	alive             bool
-	texture           ray.Texture2D
-	idle              ray.Texture2D
-	run               ray.Texture2D
 	worldPos          ray.Vector2
 	worldPosLastFrame ray.Vector2
 	rightLeft         float32
 	runningTime       float32
 	frame             int
-	maxFrames         int
 	updateTime        float32
 	speed             float32
-	width             float32
-	height            float32
 	scale             float32
 	velocity          ray.Vector2
 }
@@ -24,7 +25,7 @@ type BaseCharacter struct {
 func NewBaseCharacter() *BaseCharacter {
 	return &BaseCharacter{
 		rightLeft:  1,
-		maxFrames:  6,
+		MaxFrames:  6,
 		updateTime: 1 / 12,
 		speed:      4.0,
 		scale:      4.0,
